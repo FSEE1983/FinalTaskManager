@@ -1,0 +1,86 @@
+﻿<div class="container"> 
+  <div class="row">
+    <div class="col-sm-6 col-lg-4" style="display:inline-flex; margin-top:5px;">
+      <input type="text" class="wid" readonly="readonly" disabled="disabled" style="width:100%" value="{{ProjectInfo?.Project1}}" />
+      &nbsp;<span class="glyphicon glyphicon-search" style="font-size:25px;" (click)="OnProjectSearchOpen()"></span> 
+      &nbsp;<span class="glyphicon glyphicon-remove-sign" style="font-size:25px;" (click)="OnProjectSearchRemove()"></span> 
+    </div>
+    <div class="col-sm-6 col-lg-4" style="margin-top:5px;">
+      Sort Task By &nbsp;
+      <button class="btn btn-default" (click)="OnSort('StartDate')">Start Date</button> &nbsp;
+      <button class="btn btn-default" (click)="OnSort('EndDate')">End Date</button>&nbsp;
+      <button class="btn btn-default" (click)="OnSort('Priority')">Priority</button>&nbsp;
+      <button class="btn btn-default" (click)="OnSort('Completed')">Completed</button>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="container">
+  <h2>View Task</h2>
+  <table class="table table-bordered" style="width:100%">
+    <thead>
+      <tr>
+        <th>Task</th>
+        <th>Parent</th>
+        <th>Priority</th>
+        <th>Start</th>
+        <th>End</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let x of taskinfo">
+        <td>{{x.TaskName}}</td>
+        <td>{{x.ParentTask?.Parent_Task}}</td>
+        <td>{{x.Priority}}</td>
+        <td>{{x.Start_Date | date:'MM/dd/yyyy'}}</td>
+        <td>{{x.End_Date | date:'MM/dd/yyyy'}}</td>
+        <td>
+          <input type="button" value="Edit" [hidden]="(x.IsTaskEnded == 1)" (click)="EditTask(x.Task_ID)" />&nbsp;
+          <input type="button" value="End Task" [hidden]="(x.IsTaskEnded == 1)" (click)="EndTask(x.Task_ID)" />
+          <span [hidden]="(x.IsTaskEnded != 1)">Task is ended</span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
+<div #ProjectModel class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title ">Select Project</h5>
+        <button type="button" class="close" (click)="OnProjectSearchClose()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <table class="table table-bordered">
+          <tr>
+            <th>Select</th>
+            <th>Project ID</th>
+            <th>Project</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Priority</th>
+          </tr>
+          <tr *ngFor="let x of ProjectInfoList">
+            <td><input type="radio" name="UserID" value="{{x.Project_ID}}" [(ngModel)]="ProjectSearchID" /></td>
+            <td>{{x.Project_ID}}</td>
+            <td>{{x.Project1}}</td>
+            <td>{{x.Start_Date | date:'MM/dd/yyyy'}}</td>
+            <td>{{x.End_Date | date:'MM/dd/yyyy'}}</td>
+            <td>{{x.Priority}}</td>
+          </tr>
+        </table>
+        <div>
+          <button class="btn btn-default" (click)="OnProjectSearchSave()">Save&nbsp; &nbsp;</button> &nbsp;
+          <button class="btn btn-default" (click)="OnProjectSearchClose()">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

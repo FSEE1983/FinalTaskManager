@@ -1,0 +1,16 @@
+﻿.row {
+  margin-bottom: 5px;
+}
+
+.dottedHR {
+  border: none;
+  border-top: 1px dashed black;
+}
+
+button {
+  margin-top: 5px;
+}
+
+.table-borderless td {
+  border :none;
+}
